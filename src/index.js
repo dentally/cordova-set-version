@@ -112,8 +112,15 @@ async function getVersionFromPackage() {
 function setAttributes(xml, version, buildNumber) {
     const newXml = xml;
 
+    let header = xml.widget.preference.find(function(preference) {
+        return preference.$.name == 'AppendUserAgent';
+    });
+
     if (version) {
         newXml.widget.$.version = version;
+        if (header) {
+            header.$.value = 'Dentally iOS ' + version;
+        }
     }
 
     if (buildNumber) {
